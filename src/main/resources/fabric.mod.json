@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "nametag_health",
+  "version": "${version}",
+  "name": "Nametag Health",
+  "description": "Shows each player's current health as a small, configurable indicator on their nametag. Client-side only.",
+  "authors": [
+    "itamarbleiberg"
+  ],
+  "contact": {},
+  "license": "GPL-3.0-only",
+  "icon": "assets/nametag_health/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.kiro.nametaghealth.NametagHealth"
+    ],
+    "modmenu": [
+      "dev.kiro.nametaghealth.compat.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "nametag_health.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "cloth-config": ">=21.11.0"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}
