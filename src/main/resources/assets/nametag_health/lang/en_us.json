@@ -1,0 +1,71 @@
+{
+  "nametag_health.config.title": "Nametag Health",
+
+  "nametag_health.category.general": "General",
+  "nametag_health.category.appearance": "Appearance",
+  "nametag_health.category.color": "Colour",
+
+  "nametag_health.preview": "Preview: Steve %s",
+
+  "nametag_health.option.enabled": "Show health indicators",
+  "nametag_health.option.enabled.tooltip": "Master switch. Turn off to leave every nametag untouched.",
+
+  "nametag_health.option.show_on_players": "On players",
+  "nametag_health.option.show_on_players.tooltip": "Add the indicator to other players' nametags.",
+
+  "nametag_health.option.show_on_mobs": "On mobs",
+  "nametag_health.option.show_on_mobs.tooltip": "Also add it to named mobs, pets and other living entities that already show a nametag.",
+
+  "nametag_health.option.hide_when_full": "Only when damaged",
+  "nametag_health.option.hide_when_full.tooltip": "Hide the indicator while the entity is at full health, so tags stay clean until a fight starts.",
+
+  "nametag_health.option.max_distance": "Maximum distance",
+  "nametag_health.option.max_distance.tooltip": "Beyond this distance the nametag is drawn as normal, with no indicator.",
+  "nametag_health.option.max_distance.value": "%s blocks",
+
+  "nametag_health.option.style": "Style",
+  "nametag_health.option.style.tooltip": "How the health value is written.",
+
+  "nametag_health.option.decimals": "Decimal places",
+  "nametag_health.option.decimals.tooltip": "0 rounds to whole hearts. 1 or 2 show partial health.",
+
+  "nametag_health.option.symbol": "Heart symbol",
+  "nametag_health.option.symbol.tooltip": "Glyph drawn before the number in the Hearts style. Leave empty for no symbol.",
+
+  "nametag_health.option.wrap_in_brackets": "Wrap in brackets",
+  "nametag_health.option.wrap_in_brackets.tooltip": "Surround the indicator with grey square brackets.",
+
+  "nametag_health.option.show_absorption": "Show absorption",
+  "nametag_health.option.show_absorption.tooltip": "Append a gold +n for golden hearts from absorption effects.",
+
+  "nametag_health.option.bar_segments": "Bar length",
+  "nametag_health.option.bar_segments.tooltip": "Number of segments in the Bar style.",
+
+  "nametag_health.option.bar_filled": "Filled bar character",
+  "nametag_health.option.bar_filled.tooltip": "Character used for remaining health in the Bar style.",
+
+  "nametag_health.option.bar_empty": "Empty bar character",
+  "nametag_health.option.bar_empty.tooltip": "Character used for missing health in the Bar style.",
+
+  "nametag_health.option.color_mode": "Colour mode",
+  "nametag_health.option.color_mode.tooltip": "How the indicator picks its colour.",
+
+  "nametag_health.option.static_color": "Fixed colour",
+  "nametag_health.option.static_color.tooltip": "Used when Colour mode is set to Fixed.",
+
+  "nametag_health.option.absorption_color": "Absorption colour",
+  "nametag_health.option.absorption_color.tooltip": "Colour of the +n absorption suffix.",
+
+  "nametag_health.option.color_symbol_only": "Colour symbol only",
+  "nametag_health.option.color_symbol_only.tooltip": "Keep the number white and colour just the symbol or bar.",
+
+  "nametag_health.style.hearts": "Hearts",
+  "nametag_health.style.number": "Number",
+  "nametag_health.style.fraction": "Fraction",
+  "nametag_health.style.percent": "Percent",
+  "nametag_health.style.bar": "Bar",
+
+  "nametag_health.color_mode.gradient": "Gradient",
+  "nametag_health.color_mode.thresholds": "Steps",
+  "nametag_health.color_mode.static": "Fixed"
+}
