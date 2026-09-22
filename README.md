@@ -46,14 +46,18 @@ They were written from release notes rather than resolved against a repository, 
 <https://fabricmc.net/develop/> and the mod pages before building. All of them live in
 `gradle.properties`:
 
-| Property | Value used | Where to confirm |
+| Property | Value | Note |
 |---|---|---|
-| `yarn_mappings` | `1.21.11+build.1` | fabricmc.net/develop — **most likely to need a bump** |
-| `loader_version` | `0.18.2` | fabricmc.net/develop |
-| `fabric_version` | `0.140.0+1.21.11` | Fabric API on Modrinth |
-| `loom_version` | `1.14-SNAPSHOT` | Fabric's 1.21.11 announcement recommends Loom 1.14 |
-| `cloth_config_version` | `21.11.153` | Cloth Config's Fabric 1.21.11 file |
-| `mod_menu_version` | `17.0.0-beta.1` | Mod Menu's 1.21.11 file |
+| `yarn_mappings` | `1.21.11+build.6` | latest build for 1.21.11 |
+| `loader_version` | `0.19.5` | dev-time loader; the mod itself only requires >=0.18.0 |
+| `fabric_version` | `0.141.6+1.21.11` | |
+| `loom_version` | `1.14-SNAPSHOT` | resolves to 1.14.10, which **requires Gradle 9.2+** |
+| `cloth_config_version` | `21.11.153` | |
+| `mod_menu_version` | `17.0.0` | |
+
+The Gradle wrapper is pinned to 9.2.0 for that Loom requirement — 8.x fails with a variant
+mismatch on `org.gradle.plugin.api-version`. The CI workflow prints the current upstream versions
+on every run, so the log is the quickest place to check for drift.
 
 1.21.11 is the last obfuscated Minecraft release, so Yarn mappings still apply. If you later port to
 26.1 or newer you will need to move to Mojang's official mappings, since Yarn was retired after

@@ -50,6 +50,15 @@ jobs:
           curl -s "https://maven.fabricmc.net/net/fabricmc/fabric-loom/maven-metadata.xml" \
             | grep -oE '<version>[^<]+</version>' | tail -8
 
+          # Maven coordinates can differ from the Modrinth version strings, so confirm them too.
+          echo "### cloth-config-fabric on maven.shedaniel.me"
+          curl -s "https://maven.shedaniel.me/me/shedaniel/cloth/cloth-config-fabric/maven-metadata.xml" \
+            | grep -oE '<version>21\.11[^<]*</version>' | tail -8
+
+          echo "### modmenu on maven.terraformersmc.com"
+          curl -s "https://maven.terraformersmc.com/releases/com/terraformersmc/modmenu/maven-metadata.xml" \
+            | grep -oE '<version>17[^<]*</version>' | tail -8
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
