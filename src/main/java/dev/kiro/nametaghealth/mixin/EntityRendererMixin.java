@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Rewrites the name label on the entity render state rather than hooking the nametag draw call.
+ * Rewrites {@code displayName} on the entity render state rather than hooking the nametag draw call.
+ * Vanilla's {@code renderLabelIfPresent} reads that field off the state, so styling it here is enough.
  *
  * <p>Two reasons for that choice: the render state is built once per entity per frame with the entity
  * still in hand (so health is trivially available), and it sidesteps the submit-based render pipeline
@@ -24,8 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityRendererMixin {
     @Inject(method = "updateRenderState", at = @At("TAIL"))
     private void nametagHealth$appendHealth(Entity entity, EntityRenderState state, float tickDelta, CallbackInfo ci) {
-        if (state.nameLabel != null) {
-            state.nameLabel = HealthIndicator.decorate(entity, state.nameLabel);
+        if (state.displayName != null) {
+            state.displayName = HealthIndicator.decorate(entity, state.displayName);
         }
     }
 }

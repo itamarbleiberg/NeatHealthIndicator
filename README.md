@@ -81,7 +81,7 @@ only the symbol and leave the number white.
 
 The interesting decision is *where* the hook goes. Rather than intercepting the nametag draw call,
 `EntityRendererMixin` injects into the tail of `EntityRenderer#updateRenderState` and rewrites
-`EntityRenderState.nameLabel`:
+`EntityRenderState.displayName`, which is the field vanilla's `renderLabelIfPresent` reads:
 
 - The render state is built once per entity per frame with the entity still in scope, so health is
   available without any extra lookup.
@@ -94,9 +94,14 @@ Other players' health is read from the `LivingEntity` health tracker, which the 
 nearby clients. That is the same data vanilla uses to animate hearts, so no server-side support is
 needed — though a server running anti-cheat that strips entity data may report stale values.
 
-If `./gradlew build` reports an unresolved name, these are the only mapping-dependent symbols in the
-whole mod, all in `EntityRendererMixin`: the `EntityRenderer#updateRenderState` method and the
-`EntityRenderState.nameLabel` field. Everything else is plain Java plus stable `Text` APIs.
+The only mapping-dependent symbols in the whole mod live in `EntityRendererMixin`:
+`EntityRenderer#updateRenderState` and `EntityRenderState.displayName`. Everything else is plain Java
+plus stable `Text` APIs. When porting, `tools/dump_mappings.py` prints a class's real member names
+straight from the Yarn mappings jar:
+
+```bash
+python3 tools/dump_mappings.py 1.21.11+build.6 EntityRenderState EntityRenderer
+```
 
 ## Layout
 
