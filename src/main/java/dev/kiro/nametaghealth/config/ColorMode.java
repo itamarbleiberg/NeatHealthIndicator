@@ -1,7 +1,7 @@
 package dev.kiro.nametaghealth.config;
 
 /** How the indicator is coloured. */
-public enum ColorMode {
+public enum ColorMode implements OptionLabel {
     /** Smoothly fades red → yellow → green as health rises. */
     GRADIENT,
     /** Three flat steps: green, yellow, red. */

@@ -1,7 +1,7 @@
 package dev.kiro.nametaghealth.config;
 
 /** How the health value itself is written next to the name. */
-public enum DisplayStyle {
+public enum DisplayStyle implements OptionLabel {
     /** {@code ♥ 14} — symbol plus the current health. */
     HEARTS,
     /** {@code 14} — just the number. */
