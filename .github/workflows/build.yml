@@ -72,7 +72,8 @@ jobs:
             Entity LivingEntity PlayerEntity \
             MinecraftClient GameOptions \
             ClientPlayNetworkHandler PlayerListEntry \
-            StatusEffectInstance Style
+            StatusEffectInstance Style \
+            KeyBinding 'KeyBinding$Category'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
