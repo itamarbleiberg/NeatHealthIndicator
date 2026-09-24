@@ -47,7 +47,8 @@ def collect_required() -> set[str]:
             required.add(f"nametag_health.category.{key}")
 
         for path in CATEGORY_ID.findall(text):
-            required.add(f"key.categories.nametag_health.{path}")
+            # Vanilla uses key.category.<namespace>.<path>; the plural form is a legacy leftover.
+            required.add(f"key.category.nametag_health.{path}")
 
         if "implements OptionLabel" in text:
             prefix_match = ENUM_PREFIX.search(text)

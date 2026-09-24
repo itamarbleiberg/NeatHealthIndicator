@@ -18,7 +18,7 @@
 
   "key.nametag_health.toggle": "Toggle health indicators",
   "key.nametag_health.reveal": "Hold to reveal health",
-  "key.categories.nametag_health.main": "Nametag Health",
+  "key.category.nametag_health.main": "Nametag Health",
 
   "nametag_health.toggled.on": "Health indicators on",
   "nametag_health.toggled.off": "Health indicators off",
