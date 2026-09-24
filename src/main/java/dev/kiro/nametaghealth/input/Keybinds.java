@@ -8,17 +8,21 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 /**
  * Both keys are registered unbound. Claiming a default would risk stomping on whatever the player
  * already uses, and the mod is perfectly usable without them.
+ *
+ * <p>Keybind categories are typed as of 1.21.9, so the mod registers its own rather than passing a
+ * category string.
  */
 @Environment(EnvType.CLIENT)
 public final class Keybinds {
-    private static final String CATEGORY = "category.nametag_health";
+    private static final KeyBinding.Category CATEGORY =
+            KeyBinding.Category.create(Identifier.of("nametag_health", "main"));
 
     private static KeyBinding toggle;
     private static KeyBinding reveal;
@@ -27,10 +31,10 @@ public final class Keybinds {
     }
 
     public static void register() {
-        toggle = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.nametag_health.toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, CATEGORY));
-        reveal = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.nametag_health.reveal", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, CATEGORY));
+        toggle = KeyBindingHelper.registerKeyBinding(
+                new KeyBinding("key.nametag_health.toggle", GLFW.GLFW_KEY_UNKNOWN, CATEGORY));
+        reveal = KeyBindingHelper.registerKeyBinding(
+                new KeyBinding("key.nametag_health.reveal", GLFW.GLFW_KEY_UNKNOWN, CATEGORY));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggle.wasPressed()) {

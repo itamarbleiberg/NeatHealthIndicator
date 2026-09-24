@@ -21,8 +21,9 @@ HELPERS = r"bool|slider|string|colour|stringList|enumOption"
 HELPER_CALL = re.compile(rf"\b(?:{HELPERS})\(\s*category\s*,\s*entries\s*,\s*\"([^\"]+)\"")
 CATEGORY_CALL = re.compile(r"\bcategory\(\s*builder\s*,\s*\"([^\"]+)\"\s*\)")
 # Any literal that is already a fully-qualified key, including the unit and keybind constants.
-LITERAL_KEY = re.compile(
-    r"\"((?:(?:key\.)?nametag_health\.[a-z0-9_.]+)|category\.nametag_health)\"")
+LITERAL_KEY = re.compile(r"\"((?:key\.)?nametag_health\.[a-z0-9_.]+)\"")
+# The keybind category label is derived from an Identifier rather than written as a literal.
+CATEGORY_ID = re.compile(r"Identifier\.of\(\s*\"nametag_health\"\s*,\s*\"([a-z0-9_]+)\"\s*\)")
 ENUM_PREFIX = re.compile(r"return\s+\"([^\"]+)\"\s*\+\s*name\(\)")
 ENUM_CONSTANT = re.compile(r"^\s{4}([A-Z][A-Z0-9_]*)\s*(?:\(|,|;)", re.MULTILINE)
 
@@ -44,6 +45,9 @@ def collect_required() -> set[str]:
 
         for key in CATEGORY_CALL.findall(text):
             required.add(f"nametag_health.category.{key}")
+
+        for path in CATEGORY_ID.findall(text):
+            required.add(f"key.categories.nametag_health.{path}")
 
         if "implements OptionLabel" in text:
             prefix_match = ENUM_PREFIX.search(text)

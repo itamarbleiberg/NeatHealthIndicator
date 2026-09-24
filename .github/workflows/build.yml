@@ -81,6 +81,18 @@ jobs:
       - name: Build
         run: ./gradlew build --stacktrace
 
+      # Confirms the lang key convention for keybind categories, which mappings cannot tell us.
+      - name: Vanilla keybind category keys
+        if: always()
+        continue-on-error: true
+        run: |
+          jar=$(find ~/.gradle/caches/fabric-loom -name '*client*.jar' 2>/dev/null | head -1)
+          echo "client jar: ${jar:-not found}"
+          if [ -n "$jar" ]; then
+            unzip -p "$jar" assets/minecraft/lang/en_us.json \
+              | grep -oE '"key\.categor[^"]*"' | sort -u | head -20
+          fi
+
       - name: List produced jars
         if: always()
         run: ls -la build/libs || echo "no build/libs directory"
