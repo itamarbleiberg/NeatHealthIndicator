@@ -59,19 +59,39 @@ jobs:
           curl -s "https://maven.terraformersmc.com/releases/com/terraformersmc/modmenu/maven-metadata.xml" \
             | grep -oE '<version>17[^<]*</version>' | tail -8
 
+      - name: Check translation keys
+        run: python3 tools/check_lang.py
+
       # Diagnostic: the authoritative member names for the version we build against.
       - name: Dump mapped members
         continue-on-error: true
         run: |
           python3 tools/dump_mappings.py \
             "$(grep '^yarn_mappings=' gradle.properties | cut -d= -f2)" \
-            EntityRenderState LivingEntityRenderState PlayerEntityRenderState EntityRenderer
+            EntityRenderState EntityRenderer \
+            Entity LivingEntity PlayerEntity \
+            MinecraftClient GameOptions \
+            ClientPlayNetworkHandler PlayerListEntry \
+            StatusEffectInstance Style \
+            KeyBinding 'KeyBinding$Category'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build
         run: ./gradlew build --stacktrace
+
+      # Confirms the lang key convention for keybind categories, which mappings cannot tell us.
+      - name: Vanilla keybind category keys
+        if: always()
+        continue-on-error: true
+        run: |
+          jar=$(find ~/.gradle/caches/fabric-loom -name '*client*.jar' 2>/dev/null | head -1)
+          echo "client jar: ${jar:-not found}"
+          if [ -n "$jar" ]; then
+            unzip -p "$jar" assets/minecraft/lang/en_us.json \
+              | grep -oE '"key\.categor[^"]*"' | sort -u | head -20
+          fi
 
       - name: List produced jars
         if: always()
