@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
@@ -77,8 +78,7 @@ public final class IndicatorFormatter {
 
         String template = config.formatTemplate.isBlank() ? defaultTemplate(config) : config.formatTemplate;
         // A plausible worst piece, so the preview reflects the durability settings.
-        ArmorDurability.Worst worstArmor =
-                new ArmorDurability.Worst(net.minecraft.entity.EquipmentSlot.CHEST, 34, 240);
+        ArmorDurability.Worst worstArmor = new ArmorDurability.Worst(EquipmentSlot.HEAD, 34, 165);
         Context context = new Context(config, accent, value, muted, shown, max, ratio,
                 absorption, armor, null, null, delta, worstArmor);
         return assemble(template, context);
@@ -243,14 +243,15 @@ public final class IndicatorFormatter {
 
         MutableText out = Text.empty();
         if (!config.armorDurabilityLabel.isEmpty()) {
-            // Label stays neutral so the colour carries meaning on the number alone. Always one
-            // space before the value: predictable for "Durability:" and fine for a glyph.
+            // A word stays neutral so the colour carries meaning on the number. Always one space
+            // before what follows: predictable for "Durability:" and fine for a glyph.
             out.append(Text.literal(config.armorDurabilityLabel + " ").setStyle(context.muted()));
         }
-        if (config.armorDurabilityShowSlot) {
-            // Trailing space, or the letter runs into the number: "C 34/240", not "C34/240".
-            out.append(Text.translatable(worst.slotTranslationKey()).setStyle(context.muted()));
-            out.append(Text.literal(" "));
+        String slot = config.armorDurabilityShowSlot ? slotLabel(config, worst.slot()) : "";
+        if (!slot.isEmpty()) {
+            // Coloured like the value, so "H 34" reads as one unit that turns red together. The
+            // trailing space matters, or the letter runs into the number as "H34".
+            out.append(Text.literal(slot + " ").setStyle(style));
         }
         out.append(switch (config.armorDurabilityStyle) {
             case PERCENT -> Text.literal(Math.round(worst.ratio() * 100.0F) + "%").setStyle(style);
@@ -260,6 +261,17 @@ public final class IndicatorFormatter {
                     .append(Text.literal("/" + worst.max()).setStyle(context.muted()));
         });
         return out;
+    }
+
+    /** Slot letters live in the config rather than the lang file so players can set them directly. */
+    private static String slotLabel(NametagHealthConfig config, EquipmentSlot slot) {
+        return switch (slot) {
+            case HEAD -> config.slotLabelHead;
+            case CHEST -> config.slotLabelChest;
+            case LEGS -> config.slotLabelLegs;
+            case FEET -> config.slotLabelFeet;
+            default -> "";
+        };
     }
 
     private static MutableText delta(Context context) {
