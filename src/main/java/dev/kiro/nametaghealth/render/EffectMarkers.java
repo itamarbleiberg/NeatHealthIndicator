@@ -1,5 +1,6 @@
 package dev.kiro.nametaghealth.render;
 
+import dev.kiro.nametaghealth.NametagHealth;
 import dev.kiro.nametaghealth.mixin.LivingEntityAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -21,12 +22,20 @@ public final class EffectMarkers {
     private EffectMarkers() {
     }
 
+    private static boolean reportedFailure = false;
+
     /** @return the swirl particles currently synced for this entity, never null. */
     public static List<ParticleEffect> swirls(LivingEntity living) {
         try {
             return living.getDataTracker().get(LivingEntityAccessor.nametagHealth$potionSwirls());
         } catch (Throwable t) {
-            // A mapping or accessor problem should degrade to "no markers", not break every nametag.
+            // Degrade to "no markers" rather than breaking every nametag — but say so, once. A silent
+            // empty list here is exactly how the previous version hid the fact that it never worked.
+            if (!reportedFailure) {
+                reportedFailure = true;
+                NametagHealth.LOGGER.warn("Could not read synced potion swirl data; "
+                        + "effect markers will stay hidden.", t);
+            }
             return List.of();
         }
     }
