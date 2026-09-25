@@ -93,6 +93,22 @@ jobs:
               | grep -oE '"key\.categor[^"]*"' | sort -u | head -20
           fi
 
+      # POTION_SWIRLS is the only effect data synced to clients; we need its generic type.
+      - name: Inspect tracked effect data
+        if: always()
+        continue-on-error: true
+        run: |
+          jar=$(find ~/.gradle/caches/fabric-loom -name '*named*.jar' 2>/dev/null | head -1)
+          echo "named jar: ${jar:-not found}"
+          if [ -n "$jar" ]; then
+            javap -p -classpath "$jar" net.minecraft.entity.LivingEntity | grep -iE 'swirl|POTION' || true
+            echo "--- generic signatures ---"
+            javap -v -p -classpath "$jar" net.minecraft.entity.LivingEntity \
+              | grep -A4 -E 'POTION_SWIRLS' | grep -E 'POTION_SWIRLS|Signature|descriptor' || true
+            echo "--- DataTracker access on Entity ---"
+            javap -p -classpath "$jar" net.minecraft.entity.Entity | grep -iE 'DataTracker' || true
+          fi
+
       - name: List produced jars
         if: always()
         run: ls -la build/libs || echo "no build/libs directory"
