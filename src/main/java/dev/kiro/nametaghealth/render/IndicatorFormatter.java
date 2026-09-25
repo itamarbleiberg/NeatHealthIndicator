@@ -242,11 +242,15 @@ public final class IndicatorFormatter {
                 TextColor.fromRgb(ColorPalettes.base(config, worst.ratio()))), config);
 
         MutableText out = Text.empty();
-        if (!config.armorDurabilitySymbol.isEmpty()) {
-            out.append(Text.literal(config.armorDurabilitySymbol).setStyle(style));
+        if (!config.armorDurabilityLabel.isEmpty()) {
+            // Label stays neutral so the colour carries meaning on the number alone. Always one
+            // space before the value: predictable for "Durability:" and fine for a glyph.
+            out.append(Text.literal(config.armorDurabilityLabel + " ").setStyle(context.muted()));
         }
         if (config.armorDurabilityShowSlot) {
+            // Trailing space, or the letter runs into the number: "C 34/240", not "C34/240".
             out.append(Text.translatable(worst.slotTranslationKey()).setStyle(context.muted()));
+            out.append(Text.literal(" "));
         }
         out.append(switch (config.armorDurabilityStyle) {
             case PERCENT -> Text.literal(Math.round(worst.ratio() * 100.0F) + "%").setStyle(style);

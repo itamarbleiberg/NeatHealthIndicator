@@ -137,8 +137,8 @@ public final class NametagHealthConfigScreen {
                 v -> config.armorSymbol = v);
         bool(category, entries, "show_armor_durability", config.showArmorDurability,
                 defaults.showArmorDurability, v -> config.showArmorDurability = v);
-        string(category, entries, "armor_durability_symbol", config.armorDurabilitySymbol,
-                defaults.armorDurabilitySymbol, v -> config.armorDurabilitySymbol = v);
+        string(category, entries, "armor_durability_label", config.armorDurabilityLabel,
+                defaults.armorDurabilityLabel, v -> config.armorDurabilityLabel = v);
         enumOption(category, entries, "armor_durability_style", DurabilityStyle.class,
                 config.armorDurabilityStyle, defaults.armorDurabilityStyle,
                 v -> config.armorDurabilityStyle = v);
