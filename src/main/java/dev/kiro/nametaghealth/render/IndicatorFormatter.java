@@ -9,15 +9,12 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 
 import java.util.Locale;
 
@@ -236,33 +233,22 @@ public final class IndicatorFormatter {
         return Text.literal(text).setStyle(styled(Style.EMPTY.withColor(TextColor.fromRgb(color)), context.config()));
     }
 
+    /**
+     * Driven by the synced swirl particles rather than {@code getStatusEffects()}, which is always
+     * empty for a remote entity. That means a count, not names — see {@link EffectMarkers}.
+     */
     private static MutableText effects(NametagHealthConfig config, LivingEntity living) {
-        var active = living.getStatusEffects();
-        if (active.isEmpty()) {
+        int count = EffectMarkers.count(living);
+        if (count == 0) {
             return null;
         }
 
+        Style style = styled(Style.EMPTY.withColor(TextColor.fromRgb(config.effectColor)), config);
         if (config.effectStyle == EffectStyle.COUNT) {
-            return Text.literal(Integer.toString(active.size()))
-                    .setStyle(styled(Style.EMPTY.withColor(Formatting.AQUA), config));
+            return Text.literal(config.effectSymbol + count).setStyle(style);
         }
-
-        MutableText out = Text.empty();
-        int shown = 0;
-        for (StatusEffectInstance instance : active) {
-            if (shown >= config.maxEffectsShown) {
-                break;
-            }
-            Identifier id = Registries.STATUS_EFFECT.getId(instance.getEffectType().value());
-            String path = id == null ? "" : id.getPath();
-            String glyph = config.effectStyle == EffectStyle.DOTS
-                    ? "\u25CF"
-                    : StatusEffectGlyphs.letter(path);
-            out.append(Text.literal(glyph).setStyle(
-                    styled(Style.EMPTY.withColor(TextColor.fromRgb(StatusEffectGlyphs.color(path))), config)));
-            shown++;
-        }
-        return shown == 0 ? null : out;
+        return Text.literal(config.effectSymbol.repeat(Math.min(count, config.maxEffectsShown)))
+                .setStyle(style);
     }
 
     private static MutableText ping(MinecraftClient client, Entity entity) {

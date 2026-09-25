@@ -18,11 +18,11 @@ well-known *Health Indicators* mod but shares no code with it.
 
 ## Download
 
-A prebuilt jar is committed at [`dist/nametag-health-1.1.0.jar`](dist/nametag-health-1.1.0.jar) so it
+A prebuilt jar is committed at [`dist/nametag-health-1.1.1.jar`](dist/nametag-health-1.1.1.jar) so it
 can be downloaded without a GitHub login:
 
 ```
-https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.1.0.jar
+https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.1.1.jar
 ```
 
 CI also uploads the jar on every run, under the `nametag-health-jars` artifact. See
@@ -90,9 +90,9 @@ entities*; a *team filter* for allies or opponents only; an entity id *allow/den
 *max-health range* so you can ignore chickens or leave bosses to their own bar.
 
 **Content** — *placement* before, after or instead of the name; *armour points*; *status effect*
-markers as letters, dots or a count; player *ping*; *recent change* (`-4` / `+2`) held for a
-configurable window, with rapid hits accumulating into one running total; and *abbreviation* of large
-numbers (`1.2k`) for high-health modded mobs.
+markers as dots or a count (see the limitation below); player *ping*; *recent change* (`-4` / `+2`)
+held for a configurable window, with rapid hits accumulating into one running total; and
+*abbreviation* of large numbers (`1.2k`) for high-health modded mobs.
 
 **Colour** — gradient / stepped / fixed; three *palettes* including a colour-blind safe orange→blue
 ramp and a brightness-only monochrome one; and *configurable thresholds* which set both where the
@@ -143,6 +143,21 @@ The interesting decision is *where* the hook goes. Rather than intercepting the 
 Other players' health is read from the `LivingEntity` health tracker, which the server syncs to all
 nearby clients. That is the same data vanilla uses to animate hearts, so no server-side support is
 needed — though a server running anti-cheat that strips entity data may report stale values.
+
+### Why status effects are only a count
+
+Health is synced; status effects are not. `LivingEntity.activeStatusEffects` is a plain server-side
+map, and effect packets are sent to the affected player alone — `sendEffectToControllingPlayer` is
+named for exactly that. So `getStatusEffects()` returns an empty collection for anyone else's entity,
+and no client-only mod can tell you a nearby player has Strength II.
+
+What *is* synced is `POTION_SWIRLS`, the tracked particle list that draws the visible swirls. The
+effect marker counts those, via a mixin accessor since the field is private. Consequences worth
+knowing:
+
+- You get **how many** effects, never **which**. Naming them needs a server-side mod.
+- Effects hidden from particles — ambient beacon effects, or anything applied with `hideParticles` —
+  contribute nothing, matching what you see in world.
 
 Rebuilding the text touches the registries and allocates a small tree, so it is throttled by the
 rebuild interval and cached per entity. Anything mid-animation — smoothing, pulsing, or a delta still

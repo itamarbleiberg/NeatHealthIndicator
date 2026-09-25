@@ -2,13 +2,16 @@ package dev.kiro.nametaghealth.config;
 
 import java.util.Locale;
 
-/** How active status effects are summarised. */
+/**
+ * How active status effects are summarised.
+ *
+ * <p>There is no "letters" option because naming the effects is impossible client-side: which effects
+ * an entity has is server-side state. Only the swirl particle count is synced.
+ */
 public enum EffectStyle implements OptionLabel {
-    /** One letter per effect, taken from its id: {@code RPS}. */
-    LETTERS,
-    /** One coloured dot per effect: {@code ●●●}. */
+    /** One marker per effect: {@code ●●●}. */
     DOTS,
-    /** Just how many are active: {@code 3}. */
+    /** The marker followed by how many are active: {@code ●3}. */
     COUNT;
 
     public String translationKey() {

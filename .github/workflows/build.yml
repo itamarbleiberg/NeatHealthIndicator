@@ -93,6 +93,23 @@ jobs:
               | grep -oE '"key\.categor[^"]*"' | sort -u | head -20
           fi
 
+      # Confirms the generic type of the tracked swirl data, which mappings cannot show.
+      - name: Inspect tracked effect data
+        if: always()
+        continue-on-error: true
+        run: |
+          jar=""
+          for candidate in $(find ~/.gradle/caches/fabric-loom -name '*.jar' 2>/dev/null); do
+            if unzip -l "$candidate" 2>/dev/null | grep -q 'net/minecraft/entity/LivingEntity.class'; then
+              jar="$candidate"; break
+            fi
+          done
+          echo "named jar: ${jar:-not found}"
+          if [ -n "$jar" ]; then
+            # Plain javap prints generic signatures in field declarations; -v buries them in the pool.
+            javap -p -classpath "$jar" net.minecraft.entity.LivingEntity | grep -E 'POTION_SWIRLS'
+          fi
+
       - name: List produced jars
         if: always()
         run: ls -la build/libs || echo "no build/libs directory"
