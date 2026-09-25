@@ -18,11 +18,11 @@ well-known *Health Indicators* mod but shares no code with it.
 
 ## Download
 
-A prebuilt jar is committed at [`dist/nametag-health-1.3.0.jar`](dist/nametag-health-1.3.0.jar) so it
+A prebuilt jar is committed at [`dist/nametag-health-1.3.1.jar`](dist/nametag-health-1.3.1.jar) so it
 can be downloaded without a GitHub login:
 
 ```
-https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.3.0.jar
+https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.3.1.jar
 ```
 
 CI also uploads the jar on every run, under the `nametag-health-jars` artifact. See
