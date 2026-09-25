@@ -148,5 +148,20 @@
   "nametag_health.option.effect_symbol": "Effect symbol",
   "nametag_health.option.effect_symbol.tooltip": "Glyph used for the effect marker.",
   "nametag_health.option.effect_color": "Effect colour",
-  "nametag_health.option.effect_color.tooltip": "Colour of the effect markers. Effects are not identifiable client-side, so they all share one colour."
+  "nametag_health.option.effect_color.tooltip": "Colour of the effect markers. Effects are not identifiable client-side, so they all share one colour.",
+  "nametag_health.option.show_armor_durability": "Show armour durability",
+  "nametag_health.option.show_armor_durability.tooltip": "Show how much durability is left on whichever armour piece is closest to breaking. Compared by fraction, so a nearly spent helmet outranks a chestplate that merely has more total durability.",
+  "nametag_health.option.armor_durability_symbol": "Durability symbol",
+  "nametag_health.option.armor_durability_symbol.tooltip": "Glyph drawn before the durability value. Leave empty to drop it.",
+  "nametag_health.option.armor_durability_style": "Durability style",
+  "nametag_health.option.armor_durability_style.tooltip": "Percentage left, hits remaining before it breaks, or remaining out of total.",
+  "nametag_health.option.armor_durability_show_slot": "Name the failing slot",
+  "nametag_health.option.armor_durability_show_slot.tooltip": "Add a letter for which piece it is, so you know whether to aim for the helmet or the boots.",
+  "nametag_health.durability_style.percent": "Percent",
+  "nametag_health.durability_style.remaining": "Hits remaining",
+  "nametag_health.durability_style.fraction": "Remaining of total",
+  "nametag_health.slot.head": "H",
+  "nametag_health.slot.chest": "C",
+  "nametag_health.slot.legs": "L",
+  "nametag_health.slot.feet": "B"
 }

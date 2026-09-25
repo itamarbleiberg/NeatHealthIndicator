@@ -6,7 +6,7 @@ deliberate convenience here, not a pattern to copy elsewhere in the project.
 
 | File | Built from | SHA-256 |
 |---|---|---|
-| `nametag-health-1.1.1.jar` | `fix/effects-sync` | `a09d015ab638b76050bd50c45f046cbdb71ec4a889dd4182c6887e5d3ce967fd` |
+| `nametag-health-1.2.0.jar` | `feat/armor-durability` | `258b95059c21360a4fa4953539725c448eb5a835a56d0476d55c850217d2303a` |
 
 ## This copy can go stale
 
