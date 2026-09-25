@@ -61,8 +61,12 @@ public class NametagHealthConfig {
     public String armorSymbol = "\u25C6";
     /** Show the remaining durability of whichever armour piece is closest to breaking. */
     public boolean showArmorDurability = false;
-    public String armorDurabilitySymbol = "\u25A3";
-    public DurabilityStyle armorDurabilityStyle = DurabilityStyle.PERCENT;
+    /**
+     * Text placed before the durability value. Free-form, so it takes a word, a glyph, or nothing —
+     * {@code "Durability:"}, {@code "▣"} and {@code ""} are all valid.
+     */
+    public String armorDurabilityLabel = "Durability:";
+    public DurabilityStyle armorDurabilityStyle = DurabilityStyle.FRACTION;
     /** Prefix the value with a letter naming the slot, so you know which piece is failing. */
     public boolean armorDurabilityShowSlot = false;
     public boolean showEffects = false;
@@ -124,12 +128,12 @@ public class NametagHealthConfig {
         if (palette == null) palette = Palette.CLASSIC;
         // An older config may hold the removed LETTERS value, which Gson leaves as null.
         if (effectStyle == null) effectStyle = EffectStyle.DOTS;
-        if (armorDurabilityStyle == null) armorDurabilityStyle = DurabilityStyle.PERCENT;
+        if (armorDurabilityStyle == null) armorDurabilityStyle = DurabilityStyle.FRACTION;
 
         if (symbol == null) symbol = "";
         if (armorSymbol == null) armorSymbol = "";
         if (effectSymbol == null || effectSymbol.isEmpty()) effectSymbol = "\u25CF";
-        if (armorDurabilitySymbol == null) armorDurabilitySymbol = "";
+        if (armorDurabilityLabel == null) armorDurabilityLabel = "";
         if (formatTemplate == null) formatTemplate = "";
         if (barFilled == null || barFilled.isEmpty()) barFilled = "\u2588";
         if (barEmpty == null || barEmpty.isEmpty()) barEmpty = "\u2591";
@@ -170,7 +174,8 @@ public class NametagHealthConfig {
         if (symbol.length() > 4) symbol = symbol.substring(0, 4);
         if (armorSymbol.length() > 4) armorSymbol = armorSymbol.substring(0, 4);
         if (effectSymbol.length() > 4) effectSymbol = effectSymbol.substring(0, 4);
-        if (armorDurabilitySymbol.length() > 4) armorDurabilitySymbol = armorDurabilitySymbol.substring(0, 4);
+        // Roomier than the glyph fields, since this one is meant to hold a word.
+        if (armorDurabilityLabel.length() > 24) armorDurabilityLabel = armorDurabilityLabel.substring(0, 24);
         if (barFilled.length() > 2) barFilled = barFilled.substring(0, 2);
         if (barEmpty.length() > 2) barEmpty = barEmpty.substring(0, 2);
         return this;
