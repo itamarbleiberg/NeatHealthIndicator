@@ -106,8 +106,8 @@ jobs:
           done
           echo "named jar: ${jar:-not found}"
           if [ -n "$jar" ]; then
-            javap -v -p -classpath "$jar" net.minecraft.entity.LivingEntity \
-              | grep -B2 -A3 'POTION_SWIRLS' | grep -E 'POTION_SWIRLS|Signature|descriptor' | head -12
+            # Plain javap prints generic signatures in field declarations; -v buries them in the pool.
+            javap -p -classpath "$jar" net.minecraft.entity.LivingEntity | grep -E 'POTION_SWIRLS'
           fi
 
       - name: List produced jars
