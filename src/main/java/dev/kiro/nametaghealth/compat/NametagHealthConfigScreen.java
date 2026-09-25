@@ -140,6 +140,10 @@ public final class NametagHealthConfigScreen {
                 defaults.effectStyle, v -> config.effectStyle = v);
         slider(category, entries, "max_effects_shown", config.maxEffectsShown, defaults.maxEffectsShown,
                 1, 8, null, v -> config.maxEffectsShown = v);
+        string(category, entries, "effect_symbol", config.effectSymbol, defaults.effectSymbol,
+                v -> config.effectSymbol = v);
+        colour(category, entries, "effect_color", config.effectColor, defaults.effectColor,
+                v -> config.effectColor = v);
         bool(category, entries, "show_delta", config.showDelta, defaults.showDelta,
                 v -> config.showDelta = v);
         slider(category, entries, "delta_hold_millis", config.deltaHoldMillis, defaults.deltaHoldMillis,

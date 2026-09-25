@@ -1,28 +1,22 @@
 {
   "nametag_health.config.title": "Nametag Health",
-
   "nametag_health.category.general": "General",
   "nametag_health.category.visibility": "Visibility",
   "nametag_health.category.content": "Content",
   "nametag_health.category.color": "Colour",
   "nametag_health.category.text_style": "Text style",
   "nametag_health.category.advanced": "Advanced",
-
   "nametag_health.preview.healthy": "Healthy: Steve %s",
   "nametag_health.preview.critical": "Critical: Steve %s",
-
   "nametag_health.unit.blocks": "%s blocks",
   "nametag_health.unit.millis": "%s ms",
   "nametag_health.unit.percent": "%s%%",
   "nametag_health.unit.health": "%s HP",
-
   "key.nametag_health.toggle": "Toggle health indicators",
   "key.nametag_health.reveal": "Hold to reveal health",
   "key.category.nametag_health.main": "Nametag Health",
-
   "nametag_health.toggled.on": "Health indicators on",
   "nametag_health.toggled.off": "Health indicators off",
-
   "nametag_health.option.enabled": "Show health indicators",
   "nametag_health.option.enabled.tooltip": "Master switch. Turn off to leave every nametag untouched.",
   "nametag_health.option.show_on_players": "On players",
@@ -35,7 +29,6 @@
   "nametag_health.option.max_distance.tooltip": "Beyond this distance the nametag is drawn as normal, with no indicator.",
   "nametag_health.option.toggled_on": "Indicators visible",
   "nametag_health.option.toggled_on.tooltip": "The state flipped by the toggle keybind. Bind a key in Controls to switch it in game.",
-
   "nametag_health.option.reveal_mode": "Reveal mode",
   "nametag_health.option.reveal_mode.tooltip": "Which situations show indicators at all, from always on to only while aiming at something.",
   "nametag_health.option.reveal_items": "Reveal items",
@@ -56,7 +49,6 @@
   "nametag_health.option.min_max_health.tooltip": "Ignore entities with less total health than this. Useful for skipping chickens and bats.",
   "nametag_health.option.max_max_health": "Maximum maximum health",
   "nametag_health.option.max_max_health.tooltip": "Ignore entities with more total health than this. Useful for leaving bosses to their own health bar.",
-
   "nametag_health.option.placement": "Placement",
   "nametag_health.option.placement.tooltip": "Put the indicator after the name, before it, or use it instead of the name entirely.",
   "nametag_health.option.format_template": "Format template",
@@ -76,11 +68,11 @@
   "nametag_health.option.armor_symbol": "Armour symbol",
   "nametag_health.option.armor_symbol.tooltip": "Glyph drawn before the armour value.",
   "nametag_health.option.show_effects": "Show status effects",
-  "nametag_health.option.show_effects.tooltip": "Summarise active potion effects. Modded effects work too, falling back to their first letter.",
+  "nametag_health.option.show_effects.tooltip": "Mark entities that are under a potion effect. A client can only see the swirl particles the server sends, so this reports how many effects are active, not which ones — naming them is impossible without a server-side mod.",
   "nametag_health.option.effect_style": "Effect style",
-  "nametag_health.option.effect_style.tooltip": "Letters, coloured dots, or just a count.",
+  "nametag_health.option.effect_style.tooltip": "One marker per effect, or a single marker with a count.",
   "nametag_health.option.max_effects_shown": "Maximum effects shown",
-  "nametag_health.option.max_effects_shown.tooltip": "Caps how many effect markers appear before the rest are left off.",
+  "nametag_health.option.max_effects_shown.tooltip": "Caps how many markers appear in the dots style.",
   "nametag_health.option.show_delta": "Show recent change",
   "nametag_health.option.show_delta.tooltip": "Briefly show how much health just changed, as -4 or +2. Rapid hits accumulate into one running total.",
   "nametag_health.option.delta_hold_millis": "Change hold time",
@@ -97,7 +89,6 @@
   "nametag_health.option.bar_filled.tooltip": "Character used for remaining health in the bar style.",
   "nametag_health.option.bar_empty": "Empty bar character",
   "nametag_health.option.bar_empty.tooltip": "Character used for missing health in the bar style.",
-
   "nametag_health.option.color_mode": "Colour mode",
   "nametag_health.option.color_mode.tooltip": "Blend smoothly through the palette, step between its three colours, or ignore health and use one fixed colour.",
   "nametag_health.option.palette": "Palette",
@@ -118,51 +109,44 @@
   "nametag_health.option.pulse_threshold.tooltip": "Health share at which pulsing starts.",
   "nametag_health.option.pulse_speed": "Pulse speed",
   "nametag_health.option.pulse_speed.tooltip": "Time for one full fade out and back in. Lower is more urgent.",
-
   "nametag_health.option.bold": "Bold",
   "nametag_health.option.bold.tooltip": "Draw the indicator in bold.",
   "nametag_health.option.italic": "Italic",
   "nametag_health.option.italic.tooltip": "Draw the indicator in italics.",
   "nametag_health.option.underline": "Underline",
   "nametag_health.option.underline.tooltip": "Underline the indicator.",
-
   "nametag_health.option.smoothing_millis": "Smoothing",
   "nametag_health.option.smoothing_millis.tooltip": "Time the shown health takes to slide a full bar's worth toward the real value. 0 snaps instantly. Animating costs a little more per frame.",
   "nametag_health.option.update_interval_millis": "Rebuild interval",
   "nametag_health.option.update_interval_millis.tooltip": "How often the indicator text is rebuilt. Raise it to spend less time per frame; animations ignore it.",
-
   "nametag_health.style.hearts": "Hearts",
   "nametag_health.style.number": "Number",
   "nametag_health.style.fraction": "Fraction",
   "nametag_health.style.percent": "Percent",
   "nametag_health.style.bar": "Bar",
-
   "nametag_health.color_mode.gradient": "Gradient",
   "nametag_health.color_mode.thresholds": "Steps",
   "nametag_health.color_mode.static": "Fixed",
-
   "nametag_health.palette.classic": "Classic",
   "nametag_health.palette.colorblind": "Colour-blind",
   "nametag_health.palette.monochrome": "Monochrome",
-
   "nametag_health.placement.suffix": "After the name",
   "nametag_health.placement.prefix": "Before the name",
   "nametag_health.placement.replace_name": "Instead of the name",
-
   "nametag_health.reveal_mode.always": "Always",
   "nametag_health.reveal_mode.while_key_held": "While key held",
   "nametag_health.reveal_mode.crosshair_target": "Crosshair target only",
   "nametag_health.reveal_mode.holding_listed_item": "Holding listed item",
-
   "nametag_health.filter_mode.off": "Off",
   "nametag_health.filter_mode.whitelist": "Allow list",
   "nametag_health.filter_mode.blacklist": "Deny list",
-
   "nametag_health.team_filter.all": "Everyone",
   "nametag_health.team_filter.teammates_only": "Teammates only",
   "nametag_health.team_filter.enemies_only": "Non-teammates only",
-
-  "nametag_health.effect_style.letters": "Letters",
   "nametag_health.effect_style.dots": "Dots",
-  "nametag_health.effect_style.count": "Count"
+  "nametag_health.effect_style.count": "Count",
+  "nametag_health.option.effect_symbol": "Effect symbol",
+  "nametag_health.option.effect_symbol.tooltip": "Glyph used for the effect marker.",
+  "nametag_health.option.effect_color": "Effect colour",
+  "nametag_health.option.effect_color.tooltip": "Colour of the effect markers. Effects are not identifiable client-side, so they all share one colour."
 }

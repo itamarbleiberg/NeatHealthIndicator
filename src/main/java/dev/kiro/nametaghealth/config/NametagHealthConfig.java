@@ -60,8 +60,10 @@ public class NametagHealthConfig {
     public boolean showArmor = false;
     public String armorSymbol = "\u25C6";
     public boolean showEffects = false;
-    public EffectStyle effectStyle = EffectStyle.LETTERS;
+    public EffectStyle effectStyle = EffectStyle.DOTS;
     public int maxEffectsShown = 3;
+    public String effectSymbol = "\u25CF";
+    public int effectColor = 0x55FFFF;
     /** Briefly show how much health just changed, as {@code -4} or {@code +2}. */
     public boolean showDelta = false;
     public int deltaHoldMillis = 1500;
@@ -114,10 +116,12 @@ public class NametagHealthConfig {
         if (entityFilterMode == null) entityFilterMode = FilterMode.OFF;
         if (placement == null) placement = Placement.SUFFIX;
         if (palette == null) palette = Palette.CLASSIC;
-        if (effectStyle == null) effectStyle = EffectStyle.LETTERS;
+        // An older config may hold the removed LETTERS value, which Gson leaves as null.
+        if (effectStyle == null) effectStyle = EffectStyle.DOTS;
 
         if (symbol == null) symbol = "";
         if (armorSymbol == null) armorSymbol = "";
+        if (effectSymbol == null || effectSymbol.isEmpty()) effectSymbol = "\u25CF";
         if (formatTemplate == null) formatTemplate = "";
         if (barFilled == null || barFilled.isEmpty()) barFilled = "\u2588";
         if (barEmpty == null || barEmpty.isEmpty()) barEmpty = "\u2591";
@@ -152,10 +156,12 @@ public class NametagHealthConfig {
 
         staticColor &= 0xFFFFFF;
         absorptionColor &= 0xFFFFFF;
+        effectColor &= 0xFFFFFF;
 
         // Long symbols push the nametag off-centre; keep them short.
         if (symbol.length() > 4) symbol = symbol.substring(0, 4);
         if (armorSymbol.length() > 4) armorSymbol = armorSymbol.substring(0, 4);
+        if (effectSymbol.length() > 4) effectSymbol = effectSymbol.substring(0, 4);
         if (barFilled.length() > 2) barFilled = barFilled.substring(0, 2);
         if (barEmpty.length() > 2) barEmpty = barEmpty.substring(0, 2);
         return this;
