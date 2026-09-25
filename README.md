@@ -18,11 +18,11 @@ well-known *Health Indicators* mod but shares no code with it.
 
 ## Download
 
-A prebuilt jar is committed at [`dist/nametag-health-1.1.1.jar`](dist/nametag-health-1.1.1.jar) so it
+A prebuilt jar is committed at [`dist/nametag-health-1.2.0.jar`](dist/nametag-health-1.2.0.jar) so it
 can be downloaded without a GitHub login:
 
 ```
-https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.1.1.jar
+https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.2.0.jar
 ```
 
 CI also uploads the jar on every run, under the `nametag-health-jars` artifact. See
@@ -89,10 +89,16 @@ even though vanilla draws nametags through them; *hide with the HUD* on F1; *ski
 entities*; a *team filter* for allies or opponents only; an entity id *allow/deny list*; and a
 *max-health range* so you can ignore chickens or leave bosses to their own bar.
 
-**Content** — *placement* before, after or instead of the name; *armour points*; *status effect*
-markers as dots or a count (see the limitation below); player *ping*; *recent change* (`-4` / `+2`)
-held for a configurable window, with rapid hits accumulating into one running total; and
-*abbreviation* of large numbers (`1.2k`) for high-health modded mobs.
+**Content** — *placement* before, after or instead of the name; *armour points*; *armour durability*
+of whichever piece is closest to breaking, with a configurable symbol, percent / hits-remaining /
+fraction styles and an optional letter naming the slot; *status effect* markers as dots or a count
+(see the limitation below); player *ping*; *recent change* (`-4` / `+2`) held for a configurable
+window, with rapid hits accumulating into one running total; and *abbreviation* of large numbers
+(`1.2k`) for high-health modded mobs.
+
+Armour pieces are ranked by **fraction** remaining, not absolute hits, so a nearly spent helmet
+outranks a chestplate that merely has more total durability. The value is coloured on the same palette
+ramp as health, so there is no second colour scheme to configure.
 
 **Colour** — gradient / stepped / fixed; three *palettes* including a colour-blind safe orange→blue
 ramp and a brightness-only monochrome one; and *configurable thresholds* which set both where the
@@ -114,6 +120,7 @@ layout; set it and you control the whole thing:
 | `{sym}` `{hp}` `{max}` | heart glyph, current health, maximum |
 | `{frac}` `{pct}` `{bar}` | `14/20`, `70%`, `███████░░░` |
 | `{abs}` `{armor}` | absorption `+6`, armour `◆8` |
+| `{adur}` | worst armour piece's durability, `▣14%` |
 | `{fx}` `{ping}` `{delta}` | effect markers, `42ms`, `-4` |
 
 The template is split on spaces and each word rendered on its own. **A word whose tokens all resolve
@@ -143,6 +150,10 @@ The interesting decision is *where* the hook goes. Rather than intercepting the 
 Other players' health is read from the `LivingEntity` health tracker, which the server syncs to all
 nearby clients. That is the same data vanilla uses to animate hearts, so no server-side support is
 needed — though a server running anti-cheat that strips entity data may report stale values.
+
+Equipment is synced too — it has to be, or nobody could see what anyone is wearing — and the stacks
+arrive with their damage intact, which is what makes the armour durability indicator possible without
+server-side support. Status effects are the exception:
 
 ### Why status effects are only a count
 
