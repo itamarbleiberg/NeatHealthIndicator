@@ -63,12 +63,18 @@ public class NametagHealthConfig {
     public boolean showArmorDurability = false;
     /**
      * Text placed before the durability value. Free-form, so it takes a word, a glyph, or nothing —
-     * {@code "Durability:"}, {@code "▣"} and {@code ""} are all valid.
+     * {@code "Durability:"}, {@code "▣"} and {@code ""} are all valid. Empty by default, since the
+     * slot letter already says what the number refers to.
      */
-    public String armorDurabilityLabel = "Durability:";
+    public String armorDurabilityLabel = "";
     public DurabilityStyle armorDurabilityStyle = DurabilityStyle.REMAINING;
     /** Prefix the value with a letter naming the slot, so you know which piece is failing. */
-    public boolean armorDurabilityShowSlot = false;
+    public boolean armorDurabilityShowSlot = true;
+    /** Slot letters, configurable so the marker can read however you like. */
+    public String slotLabelHead = "H";
+    public String slotLabelChest = "C";
+    public String slotLabelLegs = "L";
+    public String slotLabelFeet = "B";
     public boolean showEffects = false;
     public EffectStyle effectStyle = EffectStyle.DOTS;
     public int maxEffectsShown = 3;
@@ -134,6 +140,10 @@ public class NametagHealthConfig {
         if (armorSymbol == null) armorSymbol = "";
         if (effectSymbol == null || effectSymbol.isEmpty()) effectSymbol = "\u25CF";
         if (armorDurabilityLabel == null) armorDurabilityLabel = "";
+        if (slotLabelHead == null) slotLabelHead = "";
+        if (slotLabelChest == null) slotLabelChest = "";
+        if (slotLabelLegs == null) slotLabelLegs = "";
+        if (slotLabelFeet == null) slotLabelFeet = "";
         if (formatTemplate == null) formatTemplate = "";
         if (barFilled == null || barFilled.isEmpty()) barFilled = "\u2588";
         if (barEmpty == null || barEmpty.isEmpty()) barEmpty = "\u2591";
@@ -176,6 +186,10 @@ public class NametagHealthConfig {
         if (effectSymbol.length() > 4) effectSymbol = effectSymbol.substring(0, 4);
         // Roomier than the glyph fields, since this one is meant to hold a word.
         if (armorDurabilityLabel.length() > 24) armorDurabilityLabel = armorDurabilityLabel.substring(0, 24);
+        if (slotLabelHead.length() > 8) slotLabelHead = slotLabelHead.substring(0, 8);
+        if (slotLabelChest.length() > 8) slotLabelChest = slotLabelChest.substring(0, 8);
+        if (slotLabelLegs.length() > 8) slotLabelLegs = slotLabelLegs.substring(0, 8);
+        if (slotLabelFeet.length() > 8) slotLabelFeet = slotLabelFeet.substring(0, 8);
         if (barFilled.length() > 2) barFilled = barFilled.substring(0, 2);
         if (barEmpty.length() > 2) barEmpty = barEmpty.substring(0, 2);
         return this;

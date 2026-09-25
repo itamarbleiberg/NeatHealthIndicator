@@ -144,6 +144,14 @@ public final class NametagHealthConfigScreen {
                 v -> config.armorDurabilityStyle = v);
         bool(category, entries, "armor_durability_show_slot", config.armorDurabilityShowSlot,
                 defaults.armorDurabilityShowSlot, v -> config.armorDurabilityShowSlot = v);
+        string(category, entries, "slot_label_head", config.slotLabelHead, defaults.slotLabelHead,
+                v -> config.slotLabelHead = v);
+        string(category, entries, "slot_label_chest", config.slotLabelChest, defaults.slotLabelChest,
+                v -> config.slotLabelChest = v);
+        string(category, entries, "slot_label_legs", config.slotLabelLegs, defaults.slotLabelLegs,
+                v -> config.slotLabelLegs = v);
+        string(category, entries, "slot_label_feet", config.slotLabelFeet, defaults.slotLabelFeet,
+                v -> config.slotLabelFeet = v);
         bool(category, entries, "show_effects", config.showEffects, defaults.showEffects,
                 v -> config.showEffects = v);
         enumOption(category, entries, "effect_style", EffectStyle.class, config.effectStyle,

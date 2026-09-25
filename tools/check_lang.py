@@ -25,8 +25,6 @@ LITERAL_KEY = re.compile(r"\"((?:key\.)?nametag_health\.[a-z0-9_.]+)\"")
 # The keybind category label is derived from an Identifier rather than written as a literal.
 CATEGORY_ID = re.compile(r"Identifier\.of\(\s*\"nametag_health\"\s*,\s*\"([a-z0-9_]+)\"\s*\)")
 ENUM_PREFIX = re.compile(r"return\s+\"([^\"]+)\"\s*\+\s*name\(\)")
-# Slot label keys are built from EquipmentSlot names at runtime, so they are never written out.
-SLOT_ARRAY = re.compile(r"ARMOR_SLOTS\s*=\s*\{([^}]*)\}", re.S)
 ENUM_CONSTANT = re.compile(r"^\s{4}([A-Z][A-Z0-9_]*)\s*(?:\(|,|;)", re.MULTILINE)
 
 
@@ -51,12 +49,6 @@ def collect_required() -> set[str]:
         for path in CATEGORY_ID.findall(text):
             # Vanilla uses key.category.<namespace>.<path>; the plural form is a legacy leftover.
             required.add(f"key.category.nametag_health.{path}")
-
-        if '"nametag_health.slot."' in text:
-            slots = SLOT_ARRAY.search(text)
-            if slots:
-                for slot in re.findall(r"EquipmentSlot\.([A-Z_]+)", slots.group(1)):
-                    required.add(f"nametag_health.slot.{slot.lower()}")
 
         if "implements OptionLabel" in text:
             prefix_match = ENUM_PREFIX.search(text)

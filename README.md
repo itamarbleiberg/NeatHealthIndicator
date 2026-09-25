@@ -18,11 +18,11 @@ well-known *Health Indicators* mod but shares no code with it.
 
 ## Download
 
-A prebuilt jar is committed at [`dist/nametag-health-1.3.1.jar`](dist/nametag-health-1.3.1.jar) so it
+A prebuilt jar is committed at [`dist/nametag-health-1.4.0.jar`](dist/nametag-health-1.4.0.jar) so it
 can be downloaded without a GitHub login:
 
 ```
-https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.3.1.jar
+https://github.com/itamarbleiberg/NeatHealthIndicator/raw/main/dist/nametag-health-1.4.0.jar
 ```
 
 CI also uploads the jar on every run, under the `nametag-health-jars` artifact. See
@@ -90,8 +90,8 @@ entities*; a *team filter* for allies or opponents only; an entity id *allow/den
 *max-health range* so you can ignore chickens or leave bosses to their own bar.
 
 **Content** — *placement* before, after or instead of the name; *armour points*; *armour durability*
-of whichever piece is closest to breaking, shown as `Durability: 34` with a free-form label and a
-choice of hits remaining, percent or fraction, plus an optional letter naming the slot; *status
+of whichever piece is closest to breaking, shown as `H 34` — a configurable slot letter plus the hits
+left — with percent and fraction also available and an optional free-form label in front; *status
 effect* markers as dots or a count
 (see the limitation below); player *ping*; *recent change* (`-4` / `+2`) held for a configurable
 window, with rapid hits accumulating into one running total; and *abbreviation* of large numbers
@@ -121,7 +121,7 @@ layout; set it and you control the whole thing:
 | `{sym}` `{hp}` `{max}` | heart glyph, current health, maximum |
 | `{frac}` `{pct}` `{bar}` | `14/20`, `70%`, `███████░░░` |
 | `{abs}` `{armor}` | absorption `+6`, armour `◆8` |
-| `{adur}` | worst armour piece's durability, `Durability: 34` |
+| `{adur}` | worst armour piece, `H 34` |
 | `{fx}` `{ping}` `{delta}` | effect markers, `42ms`, `-4` |
 
 The template is split on spaces and each word rendered on its own. **A word whose tokens all resolve

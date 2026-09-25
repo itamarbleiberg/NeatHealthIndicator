@@ -31,9 +31,6 @@ public final class ArmorDurability {
             return this.max <= 0 ? 0.0F : (float) this.remaining / this.max;
         }
 
-        public String slotTranslationKey() {
-            return "nametag_health.slot." + this.slot.name().toLowerCase(java.util.Locale.ROOT);
-        }
     }
 
     /**
