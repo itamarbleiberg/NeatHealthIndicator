@@ -66,7 +66,7 @@ public class NametagHealthConfig {
      * {@code "Durability:"}, {@code "▣"} and {@code ""} are all valid.
      */
     public String armorDurabilityLabel = "Durability:";
-    public DurabilityStyle armorDurabilityStyle = DurabilityStyle.FRACTION;
+    public DurabilityStyle armorDurabilityStyle = DurabilityStyle.REMAINING;
     /** Prefix the value with a letter naming the slot, so you know which piece is failing. */
     public boolean armorDurabilityShowSlot = false;
     public boolean showEffects = false;
@@ -128,7 +128,7 @@ public class NametagHealthConfig {
         if (palette == null) palette = Palette.CLASSIC;
         // An older config may hold the removed LETTERS value, which Gson leaves as null.
         if (effectStyle == null) effectStyle = EffectStyle.DOTS;
-        if (armorDurabilityStyle == null) armorDurabilityStyle = DurabilityStyle.FRACTION;
+        if (armorDurabilityStyle == null) armorDurabilityStyle = DurabilityStyle.REMAINING;
 
         if (symbol == null) symbol = "";
         if (armorSymbol == null) armorSymbol = "";
