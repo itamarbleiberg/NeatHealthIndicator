@@ -29,7 +29,7 @@ import java.util.Locale;
 @Environment(EnvType.CLIENT)
 public final class IndicatorFormatter {
     private static final String[] KNOWN_TOKENS =
-            {"sym", "hp", "max", "frac", "pct", "bar", "abs", "armor", "fx", "ping", "delta"};
+            {"sym", "hp", "max", "frac", "pct", "bar", "abs", "armor", "adur", "fx", "ping", "delta"};
 
     private IndicatorFormatter() {
     }
@@ -55,7 +55,8 @@ public final class IndicatorFormatter {
                 living.getArmor(),
                 template.contains("{fx}") ? effects(config, living) : null,
                 template.contains("{ping}") ? ping(client, entity) : null,
-                HealthSamples.recentDelta(sample, config, now));
+                HealthSamples.recentDelta(sample, config, now),
+                template.contains("{adur}") ? ArmorDurability.worst(living) : null);
 
         return assemble(template, context);
     }
@@ -75,8 +76,11 @@ public final class IndicatorFormatter {
         Style muted = styled(Style.EMPTY.withColor(Formatting.GRAY), config);
 
         String template = config.formatTemplate.isBlank() ? defaultTemplate(config) : config.formatTemplate;
+        // A plausible worst piece, so the preview reflects the durability settings.
+        ArmorDurability.Worst worstArmor =
+                new ArmorDurability.Worst(net.minecraft.entity.EquipmentSlot.CHEST, 34, 240);
         Context context = new Context(config, accent, value, muted, shown, max, ratio,
-                absorption, armor, null, null, delta);
+                absorption, armor, null, null, delta, worstArmor);
         return assemble(template, context);
     }
 
@@ -120,6 +124,7 @@ public final class IndicatorFormatter {
         });
         if (config.showAbsorption) template.append(" {abs}");
         if (config.showArmor) template.append(" {armor}");
+        if (config.showArmorDurability) template.append(" {adur}");
         if (config.showEffects) template.append(" {fx}");
         if (config.showPing) template.append(" {ping}");
         if (config.showDelta) template.append(" {delta}");
@@ -195,6 +200,7 @@ public final class IndicatorFormatter {
             case "armor" -> context.armor() <= 0 ? null
                     : Text.literal(config.armorSymbol + context.armor())
                     .setStyle(styled(Style.EMPTY.withColor(TextColor.fromRgb(0xC6C6C6)), config));
+            case "adur" -> armorDurability(context);
             case "fx" -> context.effects();
             case "ping" -> context.ping();
             case "delta" -> delta(context);
@@ -219,6 +225,36 @@ public final class IndicatorFormatter {
         if (filled < segments) {
             out.append(Text.literal(config.barEmpty.repeat(segments - filled)).setStyle(context.muted()));
         }
+        return out;
+    }
+
+    /**
+     * Coloured on the same palette ramp as health, so a nearly-broken piece reads as urgent without a
+     * second colour scheme to configure.
+     */
+    private static MutableText armorDurability(Context context) {
+        ArmorDurability.Worst worst = context.worstArmor();
+        if (worst == null) {
+            return null;
+        }
+        NametagHealthConfig config = context.config();
+        Style style = styled(Style.EMPTY.withColor(
+                TextColor.fromRgb(ColorPalettes.base(config, worst.ratio()))), config);
+
+        MutableText out = Text.empty();
+        if (!config.armorDurabilitySymbol.isEmpty()) {
+            out.append(Text.literal(config.armorDurabilitySymbol).setStyle(style));
+        }
+        if (config.armorDurabilityShowSlot) {
+            out.append(Text.translatable(worst.slotTranslationKey()).setStyle(context.muted()));
+        }
+        out.append(switch (config.armorDurabilityStyle) {
+            case PERCENT -> Text.literal(Math.round(worst.ratio() * 100.0F) + "%").setStyle(style);
+            case REMAINING -> Text.literal(Integer.toString(worst.remaining())).setStyle(style);
+            case FRACTION -> Text.empty()
+                    .append(Text.literal(Integer.toString(worst.remaining())).setStyle(style))
+                    .append(Text.literal("/" + worst.max()).setStyle(context.muted()));
+        });
         return out;
     }
 
@@ -304,6 +340,7 @@ public final class IndicatorFormatter {
     /** Everything a token needs, resolved once per rebuild. */
     private record Context(NametagHealthConfig config, Style accent, Style value, Style muted,
                            float shown, float max, float ratio, float absorption, int armor,
-                           MutableText effects, MutableText ping, float delta) {
+                           MutableText effects, MutableText ping, float delta,
+                           ArmorDurability.Worst worstArmor) {
     }
 }

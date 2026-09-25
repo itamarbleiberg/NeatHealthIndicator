@@ -3,6 +3,7 @@ package dev.kiro.nametaghealth.compat;
 import dev.kiro.nametaghealth.config.ColorMode;
 import dev.kiro.nametaghealth.config.ConfigManager;
 import dev.kiro.nametaghealth.config.DisplayStyle;
+import dev.kiro.nametaghealth.config.DurabilityStyle;
 import dev.kiro.nametaghealth.config.EffectStyle;
 import dev.kiro.nametaghealth.config.FilterMode;
 import dev.kiro.nametaghealth.config.NametagHealthConfig;
@@ -134,6 +135,15 @@ public final class NametagHealthConfigScreen {
                 v -> config.showArmor = v);
         string(category, entries, "armor_symbol", config.armorSymbol, defaults.armorSymbol,
                 v -> config.armorSymbol = v);
+        bool(category, entries, "show_armor_durability", config.showArmorDurability,
+                defaults.showArmorDurability, v -> config.showArmorDurability = v);
+        string(category, entries, "armor_durability_symbol", config.armorDurabilitySymbol,
+                defaults.armorDurabilitySymbol, v -> config.armorDurabilitySymbol = v);
+        enumOption(category, entries, "armor_durability_style", DurabilityStyle.class,
+                config.armorDurabilityStyle, defaults.armorDurabilityStyle,
+                v -> config.armorDurabilityStyle = v);
+        bool(category, entries, "armor_durability_show_slot", config.armorDurabilityShowSlot,
+                defaults.armorDurabilityShowSlot, v -> config.armorDurabilityShowSlot = v);
         bool(category, entries, "show_effects", config.showEffects, defaults.showEffects,
                 v -> config.showEffects = v);
         enumOption(category, entries, "effect_style", EffectStyle.class, config.effectStyle,

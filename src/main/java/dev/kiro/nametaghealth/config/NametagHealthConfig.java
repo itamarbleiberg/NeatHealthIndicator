@@ -59,6 +59,12 @@ public class NametagHealthConfig {
     public boolean showAbsorption = true;
     public boolean showArmor = false;
     public String armorSymbol = "\u25C6";
+    /** Show the remaining durability of whichever armour piece is closest to breaking. */
+    public boolean showArmorDurability = false;
+    public String armorDurabilitySymbol = "\u25A3";
+    public DurabilityStyle armorDurabilityStyle = DurabilityStyle.PERCENT;
+    /** Prefix the value with a letter naming the slot, so you know which piece is failing. */
+    public boolean armorDurabilityShowSlot = false;
     public boolean showEffects = false;
     public EffectStyle effectStyle = EffectStyle.DOTS;
     public int maxEffectsShown = 3;
@@ -118,10 +124,12 @@ public class NametagHealthConfig {
         if (palette == null) palette = Palette.CLASSIC;
         // An older config may hold the removed LETTERS value, which Gson leaves as null.
         if (effectStyle == null) effectStyle = EffectStyle.DOTS;
+        if (armorDurabilityStyle == null) armorDurabilityStyle = DurabilityStyle.PERCENT;
 
         if (symbol == null) symbol = "";
         if (armorSymbol == null) armorSymbol = "";
         if (effectSymbol == null || effectSymbol.isEmpty()) effectSymbol = "\u25CF";
+        if (armorDurabilitySymbol == null) armorDurabilitySymbol = "";
         if (formatTemplate == null) formatTemplate = "";
         if (barFilled == null || barFilled.isEmpty()) barFilled = "\u2588";
         if (barEmpty == null || barEmpty.isEmpty()) barEmpty = "\u2591";
@@ -162,6 +170,7 @@ public class NametagHealthConfig {
         if (symbol.length() > 4) symbol = symbol.substring(0, 4);
         if (armorSymbol.length() > 4) armorSymbol = armorSymbol.substring(0, 4);
         if (effectSymbol.length() > 4) effectSymbol = effectSymbol.substring(0, 4);
+        if (armorDurabilitySymbol.length() > 4) armorDurabilitySymbol = armorDurabilitySymbol.substring(0, 4);
         if (barFilled.length() > 2) barFilled = barFilled.substring(0, 2);
         if (barEmpty.length() > 2) barEmpty = barEmpty.substring(0, 2);
         return this;

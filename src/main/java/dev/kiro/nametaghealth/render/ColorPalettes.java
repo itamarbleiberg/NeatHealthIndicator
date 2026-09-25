@@ -18,16 +18,23 @@ public final class ColorPalettes {
     }
 
     public static int resolve(NametagHealthConfig config, float ratio, long now) {
-        int base = switch (config.colorMode) {
+        int color = base(config, ratio);
+        if (config.lowHealthPulse && ratio * 100.0F <= config.pulseThresholdPercent) {
+            color = pulse(color, config.pulseSpeedMillis, now);
+        }
+        return color;
+    }
+
+    /**
+     * The palette colour for any 0–1 ratio, without the health-specific pulse. Used for things that
+     * are not health but still read better on the same ramp, such as armour durability.
+     */
+    public static int base(NametagHealthConfig config, float ratio) {
+        return switch (config.colorMode) {
             case STATIC -> config.staticColor;
             case THRESHOLDS -> stepped(config, ratio);
             case GRADIENT -> gradient(config, ratio);
         };
-
-        if (config.lowHealthPulse && ratio * 100.0F <= config.pulseThresholdPercent) {
-            base = pulse(base, config.pulseSpeedMillis, now);
-        }
-        return base;
     }
 
     private static int stepped(NametagHealthConfig config, float ratio) {

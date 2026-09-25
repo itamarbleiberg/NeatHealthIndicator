@@ -73,7 +73,8 @@ jobs:
             MinecraftClient GameOptions \
             ClientPlayNetworkHandler PlayerListEntry \
             StatusEffectInstance Style \
-            KeyBinding 'KeyBinding$Category'
+            KeyBinding 'KeyBinding$Category' \
+            ItemStack EquipmentSlot
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
