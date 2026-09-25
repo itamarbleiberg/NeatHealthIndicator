@@ -90,9 +90,9 @@ entities*; a *team filter* for allies or opponents only; an entity id *allow/den
 *max-health range* so you can ignore chickens or leave bosses to their own bar.
 
 **Content** — *placement* before, after or instead of the name; *armour points*; *armour durability*
-of whichever piece is closest to breaking, shown as `Durability: 34/363` with a free-form label,
-percent / hits-remaining / fraction styles and an optional letter naming the slot; *status effect*
-markers as dots or a count
+of whichever piece is closest to breaking, shown as `Durability: 34` with a free-form label and a
+choice of hits remaining, percent or fraction, plus an optional letter naming the slot; *status
+effect* markers as dots or a count
 (see the limitation below); player *ping*; *recent change* (`-4` / `+2`) held for a configurable
 window, with rapid hits accumulating into one running total; and *abbreviation* of large numbers
 (`1.2k`) for high-health modded mobs.
@@ -121,7 +121,7 @@ layout; set it and you control the whole thing:
 | `{sym}` `{hp}` `{max}` | heart glyph, current health, maximum |
 | `{frac}` `{pct}` `{bar}` | `14/20`, `70%`, `███████░░░` |
 | `{abs}` `{armor}` | absorption `+6`, armour `◆8` |
-| `{adur}` | worst armour piece's durability, `Durability: 34/363` |
+| `{adur}` | worst armour piece's durability, `Durability: 34` |
 | `{fx}` `{ping}` `{delta}` | effect markers, `42ms`, `-4` |
 
 The template is split on spaces and each word rendered on its own. **A word whose tokens all resolve
